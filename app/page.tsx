@@ -1,52 +1,112 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image className="dark:invert" src="/next.svg" alt="Next.js logo" width={100} height={20} priority />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{' '}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{' '}
-            or the{' '}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{' '}
-            center.
-          </p>
+    <main>
+      {/* Hero */}
+      <section>
+        <h1>Absolutely useless</h1>
+        <p>
+          Nothing to see here. I&apos;ve created another blog for you to scroll it. The same as others, but on a different
+          domain.
+        </p>
+        <button>OK, I want to waste my time</button>
+      </section>
+      {/* Main */}
+      <section>
+        {/* Filters bar */}
+        <div>
+          <div>
+            <span>Showing</span>
+            <select>
+              <option>Latest</option>
+              <option>Olders</option>
+              <option>Popular</option>
+            </select>
+          </div>
+          <div>
+            <span>Categories</span>
+            <select>
+              <option>Garbage</option>
+              <option>Useless</option>
+              <option>For show</option>
+              <option>Random</option>
+              <option>News</option>
+            </select>
+          </div>
+          <div>3 articles</div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image className="dark:invert" src="/vercel.svg" alt="Vercel logomark" width={16} height={16} />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        {/* Articles grid */}
+        <div>
+          <article>
+            <Link href="/articles/1">
+              <Image src="https://picsum.photos/800/480?random=1" alt="random-pic-1" width={800} height={480}></Image>
+            </Link>
+            <div>
+              <Link href="/articles/1">Why you need to drink a water?</Link>
+              <p>Step-by-step guide to drinking a water properly</p>
+              <div>
+                <div>
+                  <Image src="https://i.pravatar.cc/64?img=1" alt="users-avatar-1" width={64} height={64}></Image>
+                  <div>
+                    <span>Doctor Alban</span>
+                    <span>2025-11-08</span>
+                  </div>
+                </div>
+                <div>
+                  <Link href="/articles/1">Read</Link>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article>
+            <Link href="/articles/2">
+              <Image src="https://picsum.photos/800/480?random=2" alt="random-pic-2" width={800} height={480}></Image>
+            </Link>
+            <div>
+              <Link href="/articles/2">Why you need to breathe?</Link>
+              <p>Step-by-step guide to breathe properly</p>
+              <div>
+                <div>
+                  <Image src="https://i.pravatar.cc/64?img=2" alt="users-avatar-2" width={64} height={64}></Image>
+                  <div>
+                    <span>Nikolas</span>
+                    <span>2025-11-09</span>
+                  </div>
+                </div>
+                <div>
+                  <Link href="/articles/2">Read</Link>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article>
+            <Link href="/articles/3">
+              <Image src="https://picsum.photos/800/480?random=3" alt="random-pic-3" width={800} height={480}></Image>
+            </Link>
+            <div>
+              <Link href="/articles/3">Do you like pineapple pizza?</Link>
+              <p>I&apos;m telling you how pizza affects your psychotype.</p>
+              <div>
+                <div>
+                  <Image src="https://i.pravatar.cc/64?img=3" alt="users-avatar-3" width={64} height={64}></Image>
+                  <div>
+                    <span>Don Francesco</span>
+                    <span>2025-11-10</span>
+                  </div>
+                </div>
+                <div>
+                  <Link href="/articles/3">Read</Link>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
-      </main>
-    </div>
+        <div>
+          <Link href="/articles">Show more</Link>
+        </div>
+      </section>
+    </main>
   )
 }
