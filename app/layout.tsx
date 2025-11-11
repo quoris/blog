@@ -27,41 +27,84 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <header>
-          <div>
-            <Link href="/">
-              <span>Y</span>
-              <span>Yet another blog</span>
+          <div className="container mx-auto flex justify-between items-center py-8">
+            <Link className="flex items-center gap-3" href="/">
+              <span className="w-10 h-10 flex justify-center items-center bg-indigo-600 text-white font-bold rounded-md">
+                Y
+              </span>
+              <span className="text-lg font-semibold">Yet another blog</span>
             </Link>
-            <div>
+            <div className="flex gap-1.5">
               <input placeholder="Search articles, categories..."></input>
-              <button>Search</button>
+              <button className="hidden md:flex">Search</button>
+              <button className="md:hidden p-2 rounded-full hover:bg-gray-100 text-gray-700 transition duration-150">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  ></path>
+                </svg>
+              </button>
             </div>
-            <nav>
-              <Link href="/articles">Articles</Link>
-              <Link href="/categories">Categories</Link>
-              <Link href="/authors">Authors</Link>
-              {/* Mobile menu */}
-              {/* <button></button> */}
+            <nav className="flex items-center">
+              <div className="hidden md:flex gap-3">
+                <Link href="/articles">Articles</Link>
+                <Link href="/categories">Categories</Link>
+                <Link href="/authors">Authors</Link>
+                <button>Log in</button>
+                {/* <button>Avatar</button> */}
+              </div>
+              <div className="md:hidden">
+                <button className="p-2 rounded-full hover:bg-gray-100 text-gray-700 transition duration-150">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                  </svg>
+                </button>
+                <button className="p-2 rounded-full hover:bg-gray-100 text-gray-700 transition duration-150">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      id="Union"
+                      d="M20.1025 3.00488C20.6067 3.05621 21 3.48232 21 4v16c0 0.5523 -0.4477 1 -1 1H10c-0.55228 0 -1 -0.4477 -1 -1v-1h10V5H9V4l0.00488 -0.10254C9.05621 3.39333 9.48232 3 10 3h10zM14.207 11.293l0.0684 0.0761c0.3203 0.3928 0.2977 0.9718 -0.0684 1.3379l-4 4 -1.41403 -1.414L11.0859 13H3v-2h8.0859L8.79297 8.70703 10.207 7.29297z"
+                      stroke-width="1"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
             </nav>
-            <div>
-              {/* For authorized users */}
-              <button>Sign in</button>
-              {/* For non authorized users */}
-              {/* <button>Sign out</button>
-              <span>Avatar</span> */}
-            </div>
           </div>
         </header>
         {children}
         <footer>
-          <div>© 2025 Yet another Blog — All rights reserved</div>
-          <div>
-            <Link href="/articles">Articles</Link>
-            <Link href="/categories">Categories</Link>
-            <Link href="/authors">Authors</Link>
-            <Link href="/about">About</Link>
-            <Link href="#">Twitter</Link>
-            <Link href="#">Sitemap</Link>
+          <div className="container mx-auto flex justify-between gap-3">
+            <div>© 2025 Yet another Blog — All rights reserved</div>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/articles">Articles</Link>
+              <Link href="/categories">Categories</Link>
+              <Link href="/authors">Authors</Link>
+              <Link href="/about">About</Link>
+              <Link href="#">Twitter</Link>
+              <Link href="#">Sitemap</Link>
+            </div>
           </div>
         </footer>
       </body>
