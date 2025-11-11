@@ -25,19 +25,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <header>
-          <div className="container mx-auto flex justify-between items-center py-8">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
+        <header className="bg-white shadow-sm">
+          <div className="container mx-auto flex justify-between items-center py-8 ">
             <Link className="flex items-center gap-3" href="/">
-              <span className="w-10 h-10 flex justify-center items-center bg-indigo-600 text-white font-bold rounded-md">
+              <span className="w-10 h-10 flex justify-center items-center bg-indigo-600 text-white font-extrabold rounded-md">
                 Y
               </span>
-              <span className="text-lg font-semibold">Yet another blog</span>
+              <span className="text-lg font-semibold text-gray-800">Yet another blog</span>
             </Link>
-            <div className="flex gap-1.5">
-              <input placeholder="Search articles, categories..."></input>
-              <button className="hidden md:flex">Search</button>
-              <button className="md:hidden p-2 rounded-full hover:bg-gray-100 text-gray-700 transition duration-150">
+            <div className="flex flex-1 max-w-2xl relative">
+              <input
+                className="w-full border border-gray-200 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500  "
+                placeholder="Search articles, categories, authors..."
+              />
+              <button className="w-18 h-9 hidden md:flex md:justify-center md:items-center bg-indigo-600 hover:bg-indigo-700 cursor-pointer text-white rounded-md absolute right-1 top-1/2 -translate-y-1/2">
+                Search
+              </button>
+              <button className="md:hidden p-2 rounded-full hover:bg-gray-100 text-gray-700 absolute right-1 top-1/2 -translate-y-1/2">
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -46,21 +51,31 @@ export default function RootLayout({
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   ></path>
                 </svg>
               </button>
             </div>
             <nav className="flex items-center">
-              <div className="hidden md:flex gap-3">
-                <Link href="/articles">Articles</Link>
-                <Link href="/categories">Categories</Link>
-                <Link href="/authors">Authors</Link>
-                <button>Log in</button>
-                {/* <button>Avatar</button> */}
+              <div className="hidden md:flex md:items-center gap-3">
+                <Link className="hover:underline" href="/articles">
+                  Articles
+                </Link>
+                <Link className="hover:underline" href="/categories">
+                  Categories
+                </Link>
+                <Link className="hover:underline" href="/authors">
+                  Authors
+                </Link>
+                <Link
+                  className="w-18 h-9 flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 cursor-pointer text-white rounded-md "
+                  href="/login"
+                >
+                  Log in
+                </Link>
               </div>
               <div className="md:hidden">
                 <button className="p-2 rounded-full hover:bg-gray-100 text-gray-700 transition duration-150">
@@ -71,7 +86,7 @@ export default function RootLayout({
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
                   </svg>
                 </button>
                 <button className="p-2 rounded-full hover:bg-gray-100 text-gray-700 transition duration-150">
@@ -85,7 +100,7 @@ export default function RootLayout({
                     <path
                       id="Union"
                       d="M20.1025 3.00488C20.6067 3.05621 21 3.48232 21 4v16c0 0.5523 -0.4477 1 -1 1H10c-0.55228 0 -1 -0.4477 -1 -1v-1h10V5H9V4l0.00488 -0.10254C9.05621 3.39333 9.48232 3 10 3h10zM14.207 11.293l0.0684 0.0761c0.3203 0.3928 0.2977 0.9718 -0.0684 1.3379l-4 4 -1.41403 -1.414L11.0859 13H3v-2h8.0859L8.79297 8.70703 10.207 7.29297z"
-                      stroke-width="1"
+                      strokeWidth="1"
                     ></path>
                   </svg>
                 </button>
@@ -94,16 +109,28 @@ export default function RootLayout({
           </div>
         </header>
         {children}
-        <footer>
-          <div className="container mx-auto flex justify-between gap-3">
+        <footer className="bg-white border-t border-gray-200">
+          <div className="container mx-auto flex justify-between py-12">
             <div>© 2025 Yet another Blog — All rights reserved</div>
             <div className="flex flex-wrap gap-3">
-              <Link href="/articles">Articles</Link>
-              <Link href="/categories">Categories</Link>
-              <Link href="/authors">Authors</Link>
-              <Link href="/about">About</Link>
-              <Link href="#">Twitter</Link>
-              <Link href="#">Sitemap</Link>
+              <Link className="hover:underline" href="/articles">
+                Articles
+              </Link>
+              <Link className="hover:underline" href="/categories">
+                Categories
+              </Link>
+              <Link className="hover:underline" href="/authors">
+                Authors
+              </Link>
+              <Link className="hover:underline" href="/about">
+                About
+              </Link>
+              <Link className="hover:underline" href="#">
+                Twitter
+              </Link>
+              <Link className="hover:underline" href="#">
+                Sitemap
+              </Link>
             </div>
           </div>
         </footer>
