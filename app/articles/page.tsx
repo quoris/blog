@@ -58,7 +58,7 @@ export default function Articles() {
                     />
                     <div>
                       <span className="block text-gray-900">Doctor Alban</span>
-                      <span className="block">2025-11-08 • 6 min</span>
+                      <span className="block text-sm">2025-11-08 • 6 min</span>
                     </div>
                   </div>
                   <Link className="text-indigo-500" href="/articles/1">
@@ -87,7 +87,7 @@ export default function Articles() {
                     />
                     <div>
                       <span className="block text-gray-900">Nikolas</span>
-                      <span className="block">2025-11-09 • 7 min</span>
+                      <span className="block text-sm">2025-11-09 • 7 min</span>
                     </div>
                   </div>
                   <Link className="text-indigo-500" href="/articles/2">
@@ -116,7 +116,7 @@ export default function Articles() {
                     />
                     <div>
                       <span className="block text-gray-900">Don Francesco</span>
-                      <span className="block">2025-11-10 • 8 min</span>
+                      <span className="block text-sm">2025-11-10 • 8 min</span>
                     </div>
                   </div>
                   <Link className="text-indigo-500" href="/articles/3">
@@ -145,7 +145,7 @@ export default function Articles() {
                     />
                     <div>
                       <span className="block text-gray-900">Anastasia</span>
-                      <span className="block">2025-11-11 • 9 min</span>
+                      <span className="block text-sm">2025-11-11 • 9 min</span>
                     </div>
                   </div>
                   <Link className="text-indigo-500" href="/articles/4">
@@ -174,7 +174,7 @@ export default function Articles() {
                     />
                     <div>
                       <span className="block text-gray-900">Professor Alvarez</span>
-                      <span className="block">2025-11-12 • 10 min</span>
+                      <span className="block text-sm">2025-11-12 • 10 min</span>
                     </div>
                   </div>
                   <Link className="text-indigo-500" href="/articles/5">
@@ -203,7 +203,7 @@ export default function Articles() {
                     />
                     <div>
                       <span className="block text-gray-900">Cody Maverick</span>
-                      <span className="block">2025-11-13 • 11 min</span>
+                      <span className="block text-sm">2025-11-13 • 11 min</span>
                     </div>
                   </div>
                   <Link className="text-indigo-500" href="/articles/6">

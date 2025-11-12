@@ -67,7 +67,7 @@ export default function Home() {
                   />
                   <div>
                     <span className="block text-gray-900">Doctor Alban</span>
-                    <span className="block">2025-11-08 • 6 min</span>
+                    <span className="block text-sm">2025-11-08 • 6 min</span>
                   </div>
                 </div>
                 <Link className="text-indigo-500" href="/articles/1">
@@ -96,7 +96,7 @@ export default function Home() {
                   />
                   <div>
                     <span className="block text-gray-900">Nikolas</span>
-                    <span className="block">2025-11-09 • 10 min</span>
+                    <span className="block text-sm">2025-11-09 • 10 min</span>
                   </div>
                 </div>
                 <Link className="text-indigo-500" href="/articles/2">
@@ -125,7 +125,7 @@ export default function Home() {
                   />
                   <div>
                     <span className="block text-gray-900">Don Francesco</span>
-                    <span className="block">2025-11-10 • 11 min</span>
+                    <span className="block text-sm">2025-11-10 • 11 min</span>
                   </div>
                 </div>
                 <Link className="text-indigo-500" href="/articles/3">
