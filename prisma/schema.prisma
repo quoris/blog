@@ -1,0 +1,291 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBER
+  AUTHOR
+  MODERATOR
+  ADMIN
+}
+
+enum PostStatus {
+  DRAFT
+  PENDING
+  PUBLISHED
+  REJECTED
+  ARCHIVED
+  DELETED
+}
+
+enum CommentStatus {
+  PENDING
+  PUBLISHED
+  REJECTED
+  DELETED
+}
+
+model User {
+  id               String     @id @default(uuid())
+  email            String     @unique
+  emailVerifiedAt  DateTime?
+  passwordHash     String?
+  username         String?    @unique
+  displayName      String?
+  role             Role       @default(MEMBER)
+  bio              String?
+  avatarId         String?
+  avatar           Media?     @relation("UserAvatar", fields: [avatarId], references: [id])
+  isActive         Boolean    @default(true)
+  commentBanUntil  DateTime?
+  postBanUntil     DateTime?
+  settings         Json?
+  posts            Post[]     @relation("AuthorPosts")
+  comments         Comment[]  @relation("AuthorComments")
+  reactions        Reaction[]
+  bookmarks        Bookmark[]
+  subscriptions    Subscription[]
+  sessions         Session[]
+  reportsMade      Report[]   @relation("Reporter")
+  moderatedPosts   Post[]     @relation("PostModeratedBy")
+  moderatedComments Comment[] @relation("CommentModeratedBy")
+  assignedReports  Report[]   @relation("AssignedTo")
+  resolvedReports  Report[]   @relation("ResolvedBy")
+  uploadedMedia    Media[]    @relation("UserUploads")
+  auditLogs        AuditLog[]
+  postRevisions    PostRevision[] @relation("PostRevisionAuthor")
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model Post {
+  id               String       @id @default(uuid())
+  authorId         String
+  author           User         @relation("AuthorPosts", fields: [authorId], references: [id])
+  title            String
+  slug             String       @unique
+  excerpt          String?
+  contentMarkdown  String
+  contentHtml      String?
+  status           PostStatus   @default(DRAFT)
+  publishedAt      DateTime?
+  scheduledAt      DateTime?
+  coverMediaId     String?
+  coverMedia       Media?       @relation("PostCover", fields: [coverMediaId], references: [id])
+  categoryId       String?
+  category         Category?    @relation(fields: [categoryId], references: [id])
+  tags             PostTag[]
+  media            PostMedia[]
+  comments         Comment[]
+  reactions        Reaction[]
+  bookmarks        Bookmark[]
+  reportsCount     Int          @default(0)
+  moderatedById    String?
+  moderatedBy      User?        @relation("PostModeratedBy", fields: [moderatedById], references: [id])
+  moderationReason String?
+  moderatedAt      DateTime?
+  deletedAt        DateTime?
+  revisions        PostRevision[]
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([status])
+  @@index([publishedAt])
+}
+
+model Media {
+  id         String     @id @default(uuid())
+  url        String
+  type       String     // IMAGE | VIDEO | FILE - можно заменить на enum если хочешь
+  mimeType   String?
+  size       Int?
+  width      Int?
+  height     Int?
+  altText    String?
+  title      String?
+  uploadedBy String?
+  uploader   User?      @relation("UserUploads", fields: [uploadedBy], references: [id])
+  metadata   Json?
+  posts      PostMedia[]
+  postsCover Post[]     @relation("PostCover")
+  avatars    User[]     @relation("UserAvatar")
+  createdAt  DateTime   @default(now())
+
+  @@index([uploadedBy])
+}
+
+model PostMedia {
+  id        String   @id @default(uuid())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  media     Media    @relation(fields: [mediaId], references: [id])
+  mediaId   String
+  caption   String?
+  order     Int?
+  createdAt DateTime @default(now())
+
+  @@unique([postId, mediaId])
+  @@index([postId])
+  @@index([mediaId])
+}
+
+model Tag {
+  id        String    @id @default(uuid())
+  name      String
+  slug      String    @unique
+  posts     PostTag[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model PostTag {
+  id      String @id @default(uuid())
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  String
+  tag     Tag    @relation(fields: [tagId], references: [id])
+  tagId   String
+  createdAt DateTime @default(now())
+
+  @@unique([postId, tagId])
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String
+  slug      String    @unique
+  description String?
+  parentId  String?
+  parent    Category? @relation("CategoryChildren", fields: [parentId], references: [id])
+  children  Category[] @relation("CategoryChildren")
+  order     Int?
+  posts     Post[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Comment {
+  id               String        @id @default(uuid())
+  post             Post          @relation(fields: [postId], references: [id])
+  postId           String
+  authorId         String
+  author           User          @relation("AuthorComments", fields: [authorId], references: [id])
+  parentCommentId  String?
+  parentComment    Comment?      @relation("CommentReplies", fields: [parentCommentId], references: [id])
+  replies          Comment[]     @relation("CommentReplies")
+  content          String
+  status           CommentStatus @default(PENDING)
+  reportsCount     Int           @default(0)
+  moderatedById    String?
+  moderatedBy      User?         @relation("CommentModeratedBy", fields: [moderatedById], references: [id])
+  moderationReason String?
+  moderatedAt      DateTime?
+  ip               String?
+  userAgent        String?
+  deletedAt        DateTime?
+  reactions        Reaction[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([postId])
+  @@index([status])
+}
+
+model Reaction {
+  id         String   @id @default(uuid())
+  type       String   // e.g. "LIKE"
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  postId     String?
+  post       Post?    @relation(fields: [postId], references: [id])
+  commentId  String?
+  comment    Comment? @relation(fields: [commentId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@index([postId])
+  @@index([commentId])
+  @@unique([userId, postId, type], map: "uniq_user_post_reaction")
+  @@unique([userId, commentId, type], map: "uniq_user_comment_reaction")
+}
+
+model Bookmark {
+  id        String @id @default(uuid())
+  userId    String
+  user      User   @relation(fields: [userId], references: [id])
+  postId    String
+  post      Post   @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId])
+}
+
+model Subscription {
+  id             String   @id @default(uuid())
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
+  authorId       String?  // подписка на конкретного автора
+  email          String?
+  isConfirmed    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  confirmedAt    DateTime?
+  unsubscribedAt DateTime?
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  provider     String?
+  providerId   String?
+  accessToken  String?
+  refreshToken String?
+  expiresAt    DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Report {
+  id            String   @id @default(uuid())
+  reporterId    String
+  reporter      User     @relation("Reporter", fields: [reporterId], references: [id])
+  entityType    String   // "POST" | "COMMENT"
+  entityId      String
+  reasonCode    String
+  description   String?
+  status        String   @default("OPEN") // OPEN, IN_PROGRESS, RESOLVED
+  assignedToId  String?
+  assignedTo    User?    @relation("AssignedTo", fields: [assignedToId], references: [id])
+  actionTaken   String?  // HIDE | DELETE | WARN | BAN
+  createdAt     DateTime @default(now())
+  resolvedAt    DateTime?
+  resolvedById  String?
+  resolvedBy    User?    @relation("ResolvedBy", fields: [resolvedById], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  entity    String
+  entityId  String
+  payload   Json?
+  createdAt DateTime @default(now())
+}
+
+model PostRevision {
+  id               String   @id @default(uuid())
+  postId           String
+  post             Post     @relation(fields: [postId], references: [id])
+  titleSnapshot    String?
+  markdownSnapshot String
+  htmlSnapshot     String?
+  authorId         String?
+  author           User?    @relation("PostRevisionAuthor", fields: [authorId], references: [id])
+  createdAt        DateTime @default(now())
+}
