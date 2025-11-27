@@ -1,7 +1,10 @@
-import Image from 'next/image'
+import { ArticlePreview } from '@/components/ArticlePreview'
+import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
+  const posts = await prisma.post.findMany({ where: { status: 'PUBLISHED' }, orderBy: { publishedAt: 'desc' }, take: 3 })
+
   return (
     <main>
       {/* Hero */}
@@ -47,93 +50,9 @@ export default function Home() {
         </div>
         {/* Articles grid */}
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-          <article className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md">
-            <Link className="block" href="/articles/1">
-              <Image src="https://picsum.photos/800/400?random=1" alt="random-pic-1" width={800} height={400}></Image>
-            </Link>
-            <div className="p-4 space-y-2">
-              <Link className="inline-block text-gray-800 text-lg font-semibold hover:underline" href="/articles/1">
-                Why you need to drink a water?
-              </Link>
-              <p>Step-by-step guide to drinking a water properly.</p>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <Image
-                    className="rounded-full"
-                    src="https://i.pravatar.cc/64?img=1"
-                    alt="users-avatar-1"
-                    width={64}
-                    height={64}
-                  />
-                  <div>
-                    <span className="block text-gray-900">Doctor Alban</span>
-                    <span className="block text-sm">2025-11-08 • 6 min</span>
-                  </div>
-                </div>
-                <Link className="text-indigo-500" href="/articles/1">
-                  Read
-                </Link>
-              </div>
-            </div>
-          </article>
-          <article className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md">
-            <Link className="block" href="/articles/2">
-              <Image src="https://picsum.photos/800/400?random=2" alt="random-pic-2" width={800} height={400}></Image>
-            </Link>
-            <div className="p-4 space-y-2">
-              <Link className="inline-block text-gray-800 text-lg font-semibold hover:underline" href="/articles/2">
-                Why you need to breathe?
-              </Link>
-              <p>Step-by-step guide to breathe properly.</p>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <Image
-                    className="rounded-full"
-                    src="https://i.pravatar.cc/64?img=2"
-                    alt="users-avatar-2"
-                    width={64}
-                    height={64}
-                  />
-                  <div>
-                    <span className="block text-gray-900">Nikolas</span>
-                    <span className="block text-sm">2025-11-09 • 10 min</span>
-                  </div>
-                </div>
-                <Link className="text-indigo-500" href="/articles/2">
-                  Read
-                </Link>
-              </div>
-            </div>
-          </article>
-          <article className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md">
-            <Link className="block" href="/articles/3">
-              <Image src="https://picsum.photos/800/400?random=3" alt="random-pic-3" width={800} height={400}></Image>
-            </Link>
-            <div className="p-4 space-y-2">
-              <Link className="inline-block text-gray-800 text-lg font-semibold hover:underline" href="/articles/3">
-                Do you like pineapple pizza?
-              </Link>
-              <p>I&apos;m telling you how pizza affects your psychotype.</p>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <Image
-                    className="rounded-full"
-                    src="https://i.pravatar.cc/64?img=3"
-                    alt="users-avatar-3"
-                    width={64}
-                    height={64}
-                  />
-                  <div>
-                    <span className="block text-gray-900">Don Francesco</span>
-                    <span className="block text-sm">2025-11-10 • 11 min</span>
-                  </div>
-                </div>
-                <Link className="text-indigo-500" href="/articles/3">
-                  Read
-                </Link>
-              </div>
-            </div>
-          </article>
+          {posts.map((post) => (
+            <ArticlePreview key={post.id} post={post} mode="preview" />
+          ))}
         </div>
         <div className="container mx-auto flex justify-center">
           <Link

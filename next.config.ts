@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
       new URL('https://picsum.photos/**/**?random=4'),
       new URL('https://picsum.photos/**/**?random=5'),
       new URL('https://picsum.photos/**/**?random=6'),
+      new URL('https://static.photos/abstract/**/**'),
+      new URL('https://picsum.photos/seed/**/**/**'),
+      new URL('https://picsum.photos/seed/**/**/**?grayscale'),
     ],
   },
 }
