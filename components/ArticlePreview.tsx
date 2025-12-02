@@ -2,14 +2,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Post } from '@/prisma/generated/client'
 import { prisma } from '@/lib/prisma'
-
-const DEFAULT_AVATAR_URL = '/avatar.svg'
-const DEFAULT_AVATAR_ALT = 'Default avatar'
-const DEFAULT_COVER_MEDIA_URL = 'https://static.photos/abstract/640x360/69'
-const DEFAULT_COVER_MEDIA_ALT = 'The cover of an article'
+import { DEFAULT_AVATAR_ALT, DEFAULT_AVATAR_URL, DEFAULT_COVER_MEDIA_ALT, DEFAULT_COVER_MEDIA_URL } from '@/lib/constants'
 
 export const ArticlePreview = async ({ post, mode }: { post: Post; mode: 'preview' | 'full' }) => {
-  const href = `/article/${post.slug}`
+  const href = `/articles/${post.slug}`
   const aspectRatio = mode === 'preview' ? 'aspect-16/8' : 'aspect-22/8'
 
   const coverMediaDb = post.coverMediaId
@@ -44,13 +40,7 @@ export const ArticlePreview = async ({ post, mode }: { post: Post; mode: 'previe
     <article className="bg-white rounded-lg overflow-hidden shadow hover:shadow-md transition-shadow">
       <Link className="block" href={href}>
         <div className={`relative w-full ${aspectRatio} overflow-hidden`}>
-          <Image
-            fill
-            src={coverMedia.url}
-            alt={coverMedia.altText}
-            className="object-cover"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
+          <Image src={coverMedia.url} alt={coverMedia.altText} fill className="object-cover" />
         </div>
       </Link>
       <div className="p-4 space-y-2">
